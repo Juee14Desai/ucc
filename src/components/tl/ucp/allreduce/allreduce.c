@@ -29,6 +29,11 @@ ucc_base_coll_alg_info_t
             {.id   = UCC_TL_UCP_ALLREDUCE_ALG_SLIDING_WINDOW,
              .name = "sliding_window",
              .desc = "sliding window allreduce (optimized for running on DPU)"},
+        [UCC_TL_UCP_ALLREDUCE_ALG_RING] =
+            {.id   = UCC_TL_UCP_ALLREDUCE_ALG_RING,
+             .name = "ring",
+             .desc = "reduce-scatter ring followed by allgather ring "
+                     "(topology-aware, optimized for BW)"},
         [UCC_TL_UCP_ALLREDUCE_ALG_LAST] = {
             .id = 0, .name = NULL, .desc = NULL}};
 

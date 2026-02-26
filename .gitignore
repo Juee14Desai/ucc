@@ -95,3 +95,9 @@ tools/info/ucc_info
 tools/perf/ucc_perftest
 modules
 
+# Install artifacts (from make install --prefix=<source-tree>)
+/bin/
+/lib/
+/include/
+/ucc.pc
+

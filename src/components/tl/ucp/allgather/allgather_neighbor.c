@@ -54,6 +54,16 @@ ucc_status_t ucc_tl_ucp_allgather_neighbor_init(ucc_base_coll_args_t *coll_args,
         tl_debug(UCC_TASK_LIB(task),
                  "odd team size is not supported, switching to ring");
         status = ucc_tl_ucp_allgather_ring_init_common(task);
+        if (status == UCC_ERR_NOT_FOUND) {
+            /* cuda_ring not available (e.g. no topo), use knomial instead */
+            tl_debug(UCC_TASK_LIB(task),
+                     "ring not available, switching to knomial");
+            status = ucc_tl_ucp_allgather_knomial_init(coll_args, team, task_h);
+            if (status == UCC_OK) {
+                ucc_tl_ucp_put_task(task);
+                return UCC_OK;
+            }
+        }
     } else {
         task->super.post     = ucc_tl_ucp_allgather_neighbor_start;
         task->super.progress = ucc_tl_ucp_allgather_neighbor_progress;
